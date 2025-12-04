@@ -1,10 +1,19 @@
 name: Hello World Workflow
 
-on: [push]
+on: 
+    push:
+        branches:
+            - main
 
 jobs:
-    hello_world_job:
+    hello_world_job_build:
         runs-on: ubuntu-latest
         steps:
-            - name: Hello World
+            - name: Print Hello World
               run: echo "Hello World"
+
+            - name: Print the date
+              run: date
+
+            - name: Print the list directory contents
+              run: ls -l
