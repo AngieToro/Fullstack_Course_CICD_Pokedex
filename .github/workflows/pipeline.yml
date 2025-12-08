@@ -8,6 +8,7 @@ on:
 jobs:
     build_and_test_deployment_pipeline_job:
         runs-on: ubuntu-latest
+
         steps:
             - name: Checkout code 
               uses: actions/checkout@v5
@@ -19,12 +20,26 @@ jobs:
             
             - name: Install dependencies
               run: npm install
+
+            - name: Install Playwright Browsers
+              run: npx playwright install --with-deps
             
             - name: Check style (Lint)
               run: npm run eslint
             
-            - name: Run tests
+            - name: Run Jest tests
               run: npm run test
+
+            - name: Run Playwright tests
+              run: npm run test:e2e
+
+            - name: Upload Playwright HTML report
+              if: ${{ !cancelled() }}
+              uses: actions/upload-artifact@v4
+              with:
+                name: playwright-report
+                path: playwright-report/
+                retention-days: 30
             
             - name: Build project
               run: npm run build
