@@ -1,0 +1,2 @@
+### Buscar todos los usuarios
+GET http://localhost:5050/version

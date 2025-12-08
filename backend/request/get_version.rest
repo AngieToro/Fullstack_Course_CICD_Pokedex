@@ -1,0 +1,5 @@
+### Version 1
+GET http://localhost:5050/version
+
+### Version 2
+GET http://localhost:5050/api/version

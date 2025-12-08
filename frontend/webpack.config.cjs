@@ -1,12 +1,18 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const path = require('path')
 
+console.log('Usando Webpack desde:', __dirname)
+
 module.exports = {
-  entry: './src/index.jsx',
+  //entry: './src/index.jsx',
+  entry: path.resolve(__dirname, 'src/index.jsx'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/'
+  },
+  performance: {
+    hints: false
   },
   module: {
     rules: [
@@ -43,10 +49,15 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    static: {
+      directory: path.resolve(__dirname, 'public'),
+    },
+    port: 8080,
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './public/index.html',
+      //template: './public/index.html',
+      template: path.resolve(__dirname, 'public/index.html'),
       filename: './index.html',
     }),
   ],

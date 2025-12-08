@@ -3,9 +3,20 @@ import axiosMock from 'axios'
 import { act } from 'react-dom/test-utils'
 import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
-import App from '../src/App'
+import App from '../frontend/src/App'
 
 jest.mock('axios')
+
+beforeEach(() => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve({ 
+        version: "1.0.0", 
+        commit: "abc1234567" 
+      })
+    })
+  )
+})
 
 describe('<App />', () => {
   it('fetches data', async () => {
@@ -21,6 +32,8 @@ describe('<App />', () => {
     })
     expect(axiosMock.get).toHaveBeenCalledTimes(1)
     expect(axiosMock.get).toHaveBeenCalledWith('https://pokeapi.co/api/v2/pokemon/?limit=50')
+    expect(screen.getByText(/Version: 1.0.0/i)).toBeInTheDocument()
+    expect(screen.getByText(/Version: 1.0.0/i)).toBeInTheDocument()
   })
 
   it('shows error', async () => {

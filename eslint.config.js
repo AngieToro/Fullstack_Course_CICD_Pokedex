@@ -32,7 +32,8 @@ export default [
         __dirname: 'readonly',
         console: 'readonly',
         window: 'readonly',
-        document: 'readonly'
+        document: 'readonly',
+        fetch: 'readonly'
       }
     },
     plugins: {

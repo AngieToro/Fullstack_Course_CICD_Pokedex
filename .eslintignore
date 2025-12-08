@@ -1,3 +1,7 @@
-webpack.config.js
-node_modules/
-dist/
+node_modules
+dist
+build
+coverage
+frontend/dist
+*.log
+*.json
