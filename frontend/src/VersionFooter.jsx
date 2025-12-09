@@ -1,9 +1,10 @@
+/* global VITE_BACKEND_URL */
 import { useEffect, useState } from 'react'
 
 const VersionFooter = () => {
 
   const [ versionInfo, setVersionInfo ] = useState(null)
-  const VITE_BACKEND_URL = null
+
   // VITE_BACKEND_URL será reemplazado por Webpack
   const backendBase = VITE_BACKEND_URL || 'http://localhost:5050'
 
