@@ -3,6 +3,8 @@ import axiosMock from 'axios'
 import { act } from 'react'
 import '@testing-library/jest-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
+
+global.VITE_BACKEND_URL = ''
 import App from '../frontend/src/App'
 
 jest.mock('axios')
