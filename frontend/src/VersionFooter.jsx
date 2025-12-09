@@ -11,8 +11,10 @@ const VersionFooter = () => {
       ? VITE_BACKEND_URL
       : 'http://localhost:5050'
 
+  console.log('Backend url:', backendBase)
+
   // endpoint completo
-  const baseUrl = `${backendBase}/api/version`
+  const baseUrl = `${backendBase}api/version`
   console.log('Base url: ', baseUrl)
 
   useEffect( () => {
