@@ -4,7 +4,8 @@
   "type": "module",
   "description": "Full Stack Open",
   "scripts": {
-    "start": "node backend/app.js",
+    "build:frontend": "cd frontend && npm install && npm run build",
+    "start": "npm run start:backend",
     "start:frontend": "cd frontend && webpack serve --config webpack.config.cjs --mode development",
     "start:backend": "node backend/app.js",
     "start-prod": "node backend/app.js",

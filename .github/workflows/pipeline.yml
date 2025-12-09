@@ -30,6 +30,9 @@ jobs:
             - name: Run Jest tests
               run: npm run test
 
+            - name: Build project frontend
+              run: npm run build:frontend
+
             - name: Run Playwright tests
               run: npm run test:e2e
 
