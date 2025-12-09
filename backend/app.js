@@ -8,7 +8,6 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 console.log('Dirname: ', __dirname)
 
-
 const app = express()
 app.use(cors())
 
@@ -16,18 +15,34 @@ app.use(cors())
 //port is related with the backend
 const PORT = process.env.PORT || 5050
 
-//app.use(express.static('dist'))
-// Contectarse el frontend compilado (en producción)
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+const isProd = process.env.NODE_ENV === 'production'
 
-// API: /version
-app.get('/api/version', getVersion)
+// FRONTEND (solo en desarrollo local)
+if ( !isProd ){
+  console.log('Serving frontend from ../frontend/dist in DEV')
+  // Opcional: para desarrollo, si quieres servir el frontend localmente
+  //app.use(express.static('dist'))
+  // Contectarse el frontend compilado (en producción)
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
+}
 
-// Redireccionar cualquier otra ruta al index.html del frontend
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+//API Routes
+// Health check / Render root
+app.get('/', (req, res) => {
+  res.send('Backend running')
 })
 
+// API Version endpoint
+app.get('/api/version', getVersion)
+
+if ( !isProd ){
+// Fallback SPA: cualquier ruta que no sea /api/* en DEV
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+  })
+}
+
+// START SERVER
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`)
 })
