@@ -6,10 +6,14 @@ const VersionFooter = () => {
   const [ versionInfo, setVersionInfo ] = useState(null)
 
   // VITE_BACKEND_URL será reemplazado por Webpack
-  const backendBase = VITE_BACKEND_URL || 'http://localhost:5050'
+  const backendBase =
+    typeof VITE_BACKEND_URL !== 'undefined' && VITE_BACKEND_URL
+      ? VITE_BACKEND_URL
+      : 'http://localhost:5050'
 
   // endpoint completo
   const baseUrl = `${backendBase}/api/version`
+  console.log('Base url: ', baseUrl)
 
   useEffect( () => {
 
