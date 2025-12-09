@@ -34,7 +34,7 @@ jobs:
           - name: Run Jest tests
             run: npm run test
 
-          - name: Build project frontend
+          - name: Build project frontend for Playwright tests
             run: npm run build:frontend
 
           - name: Run Playwright tests
@@ -47,6 +47,25 @@ jobs:
               name: playwright-report
               path: playwright-report/
               retention-days: 30
-          
-          - name: Build project
+
+          - name: Deploy (build project for production)
+            if: ${{ github.event_name == 'push' }}
             run: npm run build
+
+    tag_release:
+      name: Increase version and create tag
+      needs: [build_and_test_deployment_pipeline_job] #espera que termine el otro job
+      runs-on: ubuntu-latest
+      if: ${{ github.event_name == 'push' }}
+
+      steps:
+        - name: Checkout code 
+          uses: actions/checkout@v5
+
+        - name: Bump version and push tag
+          uses: anothrNick/github-tag-action@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BUMP: patch #para que incremente el último número de la versión (1.0.0 → 1.0.1).
+            TAG_PREFIX: v
+            PRERELEASE: true
