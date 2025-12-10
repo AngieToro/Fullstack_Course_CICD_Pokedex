@@ -35,6 +35,13 @@ app.get('/', (req, res) => {
 // API Version endpoint
 app.get('/api/version', getVersion)
 
+//API Health
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'Good',
+    uptime: process.uptime() })
+})
+
 if ( !isProd ){
 // Fallback SPA: cualquier ruta que no sea /api/* en DEV
   app.get('*', (req, res) => {
